@@ -1,0 +1,44 @@
+{
+  "best_epoch": 40,
+  "best_val_miou": 0.9102079867677288,
+  "final_val_metrics": {
+    "boundary_f1": 0.9746923464186051,
+    "dice_score": 0.9500622048097498,
+    "lane_pixel_f1": 0.9519984266337227,
+    "loss": 0.02769018745268969,
+    "miou": 0.9102079867677288,
+    "per_class_f1": [
+      0.9942788636057287,
+      0.9353558040537349,
+      0.9527142949262888,
+      0.9224148602956608
+    ],
+    "per_class_iou": [
+      0.9886277481394846,
+      0.8838728670250829,
+      0.9101376744749615,
+      0.8581936574313868
+    ],
+    "per_class_precision": [
+      0.9951295835043307,
+      0.937260997018915,
+      0.9539243226295983,
+      0.8981657466891299
+    ],
+    "per_class_recall": [
+      0.9934332298113628,
+      0.9380061043168036,
+      0.9520377993064237,
+      0.9507128674622694
+    ]
+  },
+  "model_config_path": "/home/WVU-AD/ma00290/Downloads/Unet Train/configs/model/aspp.yaml",
+  "output_dir": "/home/WVU-AD/ma00290/Downloads/Unet Train/outputs/aspp",
+  "profiling": {
+    "approximate_flops": 20548155392.0,
+    "inference_fps": 323.2842890623375,
+    "model_size_mb": 19.960803,
+    "parameter_count": 4972322
+  },
+  "train_config_path": "/home/WVU-AD/ma00290/Downloads/Unet Train/configs/train/focal_dice.yaml"
+}

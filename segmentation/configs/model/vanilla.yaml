@@ -1,0 +1,7 @@
+model:
+  model_name: vanilla_unet
+  in_channels: 3
+  num_classes: 4
+  base_channels: 32
+  bilinear: true
+

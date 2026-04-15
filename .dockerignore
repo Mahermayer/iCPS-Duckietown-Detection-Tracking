@@ -1,0 +1,11 @@
+# Vehicle Docker image only needs the ROS package, dependency manifests, and launchers.
+**
+
+!Dockerfile
+!dependencies-apt.txt
+!dependencies-py3.txt
+!dependencies-py3.dt.txt
+!packages/
+!packages/**
+!launchers/
+!launchers/**

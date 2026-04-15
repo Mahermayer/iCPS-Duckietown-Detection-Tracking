@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.venv/
+
+# Local/editor state
+.codex
+.DS_Store
+*.swp
+
+# Generated documentation and build outputs
+docs/build/
+html/
+build/
+dist/
+*.egg-info/
+
+# Runtime outputs
+output/
+outputs/
+rec/
+runs/
+YOLOX_outputs/
+*.log
+*.csv
+*.avi
+*.mp4
+
+# Model/export artifacts generated during experiments
+*.onnx
+*.engine
+
+# Nested repositories/build artifacts from vendored code
+ByteTrack/.git/
+ByteTrack/build/
+ByteTrack/videos/
+ByteTrack/assets/
+ByteTrack/tutorials/
+ByteTrack/deploy/
+ByteTrack/tools/
+ByteTrack/exps/
+
+# Bulky training output directories. Keep selected runtime checkpoints in weight/.
+datasets/
+weight/outputs/

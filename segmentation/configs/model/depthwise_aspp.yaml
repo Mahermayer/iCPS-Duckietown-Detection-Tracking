@@ -1,0 +1,10 @@
+model:
+  model_name: configurable_unet
+  in_channels: 3
+  num_classes: 4
+  base_channels: 32
+  bilinear: true
+  use_depthwise: true
+  use_se_decoder: false
+  use_aspp: true
+

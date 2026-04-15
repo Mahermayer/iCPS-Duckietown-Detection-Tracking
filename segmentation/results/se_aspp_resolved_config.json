@@ -1,0 +1,66 @@
+{
+  "dataset": {
+    "image_dirname": "trainTRACKimg",
+    "mask_dirname": "trainTRACKmask",
+    "num_workers": 2,
+    "pin_memory": true,
+    "root": "datasets",
+    "split_seed": 42,
+    "val_fraction": 0.1
+  },
+  "experiment_name": "focal_dice",
+  "input": {
+    "image_size": [
+      256,
+      256
+    ]
+  },
+  "logging": {
+    "entity": null,
+    "project": "duckietown-lane-seg",
+    "use_wandb": false
+  },
+  "metrics": {
+    "boundary_tolerance": 2,
+    "lane_class_ids": [
+      1,
+      2,
+      3
+    ]
+  },
+  "model": {
+    "base_channels": 32,
+    "bilinear": true,
+    "in_channels": 3,
+    "model_name": "configurable_unet",
+    "num_classes": 4,
+    "use_aspp": true,
+    "use_depthwise": false,
+    "use_se_decoder": true
+  },
+  "model_config_path": "/home/WVU-AD/ma00290/Downloads/Unet Train/configs/model/se_aspp.yaml",
+  "output_root": "outputs",
+  "profiling": {
+    "enabled": true,
+    "fps_runs": 30,
+    "fps_warmup": 5
+  },
+  "seed": 42,
+  "train": {
+    "amp": false,
+    "batch_size": 8,
+    "ce_weight": 0.5,
+    "dice_weight": 0.5,
+    "early_stopping_min_delta": 0.0,
+    "early_stopping_patience": 10,
+    "epochs": 40,
+    "focal_gamma": 2.0,
+    "focal_weight": 0.5,
+    "learning_rate": 0.001,
+    "loss_name": "focal_dice",
+    "optimizer": "adamw",
+    "use_class_weights": true,
+    "weight_decay": 0.0001
+  },
+  "train_config_path": "/home/WVU-AD/ma00290/Downloads/Unet Train/configs/train/focal_dice.yaml"
+}

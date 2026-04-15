@@ -1,0 +1,40 @@
+seed: 42
+experiment_name: dice_ce
+output_root: outputs
+dataset:
+  root: datasets
+  image_dirname: trainTRACKimg
+  mask_dirname: trainTRACKmask
+  val_fraction: 0.1
+  split_seed: 42
+  num_workers: 2
+  pin_memory: true
+input:
+  image_size: [256, 256]
+train:
+  batch_size: 8
+  epochs: 40
+  optimizer: adamw
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  early_stopping_patience: 10
+  early_stopping_min_delta: 0.0
+  amp: false
+  loss_name: dice_ce
+  use_class_weights: true
+  focal_gamma: 2.0
+  focal_weight: 0.5
+  dice_weight: 0.5
+  ce_weight: 0.5
+metrics:
+  lane_class_ids: [1, 2, 3]
+  boundary_tolerance: 2
+logging:
+  use_wandb: false
+  project: duckietown-lane-seg
+  entity: null
+profiling:
+  enabled: true
+  fps_runs: 30
+  fps_warmup: 5
+
