@@ -1,6 +1,6 @@
 # parameters
 ARG REPO_NAME="<template-ros>"
-ARG DESCRIPTION="<Testing>"
+ARG DESCRIPTION="<iCPS Deployment>"
 ARG MAINTAINER="<Maher> (<ma00290@mix.wvu.edu>)"
 # pick an icon from: https://fontawesome.com/v4.7.0/icons/
 ARG ICON="cube"
@@ -65,7 +65,11 @@ COPY ./dependencies-py3.* "${REPO_PATH}/"
 RUN dt-pip3-install "${REPO_PATH}/dependencies-py3.*"
 
 # copy the source code
-COPY ./packages "${REPO_PATH}/" 
+COPY ./packages "${REPO_PATH}/"
+COPY ./ByteTrack "${REPO_PATH}/ByteTrack"
+COPY ./segmentation "${REPO_PATH}/segmentation"
+COPY ./weight "${REPO_PATH}/weight"
+COPY ./lane_pipeline.py ./lane_constants.py "${REPO_PATH}/"
 
 # build packages
 RUN . /opt/ros/${ROS_DISTRO}/setup.sh && \

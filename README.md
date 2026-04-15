@@ -5,15 +5,14 @@ This repository extends the lane-segmentation training work in
 into a live Duckiebot perception/control pipeline:
 
 1. The vehicle ROS node captures compressed camera frames.
-2. The node streams JPEG frames to a GPU server over TCP.
-3. The server runs YOLO, U-Net lane segmentation, and ByteTrack.
-4. The server estimates lane error and computes PID/FSM velocity commands.
-5. The vehicle applies returned `v` and `omega` commands.
-6. The server can show a local OpenCV GUI overlay with lanes, detections, tracks, and control output.
+2. The default Duckietown launcher runs YOLO, U-Net lane segmentation, ByteTrack, and PID/FSM control on the vehicle.
+3. The vehicle publishes returned `v` and `omega` commands locally.
+4. The TCP GPU-server mode is still available as an alternate launcher for off-board inference.
 
 ## Main Files
 
 - `packages/my_package/src/vehicle_client.py` - Duckiebot ROS client that streams camera frames and publishes returned commands.
+- `packages/my_package/src/vehicle_local_inference.py` - Duckiebot ROS node for on-board YOLO + U-Net + ByteTrack + PID/FSM inference.
 - `gpu_server.py` - TCP GPU server and optional OpenCV GUI.
 - `lane_pipeline.py` - YOLO + U-Net + ByteTrack + PID/FSM control logic.
 - `visual.py` - GUI overlay renderer.
@@ -49,6 +48,15 @@ YOLO_WEIGHTS=weight/yolo.pt
 
 ## Vehicle Setup
 
+The default Duckietown launcher now runs all inference on the vehicle. The Docker image copies:
+
+- `weight/`
+- `lane_pipeline.py`
+- `lane_constants.py`
+- `segmentation/`
+- `ByteTrack/`
+- `packages/`
+
 Build the Duckiebot image from the project root. Replace `ruks007` with your vehicle hostname:
 
 ```bash
@@ -64,16 +72,42 @@ dts devel run -H ruks007
 The default launcher runs:
 
 ```bash
-rosrun my_package vehicle_client.py
+rosrun my_package vehicle_local_inference.py
 ```
 
-Set the GPU server address when launching if the default is not correct:
+Useful on-board inference environment variables:
 
 ```bash
-GPU_SERVER_IP=<server-ip> GPU_SERVER_PORT=5001 dts devel run -H ruks007
+LOCAL_FRAME_RATE=5.0
+LOCAL_LOG_PERIOD=5.0
+LANE_VERBOSE=0
+YOLO_WEIGHTS=weight/yolo.pt
+SEG_WEIGHTS=weight/segment_depthwise_se.pth
 ```
 
-For direct ROS testing inside a Duckietown shell/container, use ROS params:
+The local node keeps logs minimal. It reports startup once and throttles runtime status logs.
+
+For direct on-vehicle ROS testing inside the Duckietown shell/container:
+
+```bash
+rosrun my_package vehicle_local_inference.py _frame_rate:=5.0 _log_period:=5.0
+```
+
+### Remote GPU Mode
+
+The old TCP client is still available with the `remote_client` launcher:
+
+```bash
+dts devel run -H ruks007 -L remote_client
+```
+
+Set the GPU server address when using remote mode:
+
+```bash
+GPU_SERVER_IP=<server-ip> GPU_SERVER_PORT=5001 dts devel run -H ruks007 -L remote_client
+```
+
+For direct remote-client testing inside a Duckietown shell/container, use ROS params:
 
 ```bash
 rosrun my_package vehicle_client.py _gpu_ip:=<server-ip> _gpu_port:=5001
