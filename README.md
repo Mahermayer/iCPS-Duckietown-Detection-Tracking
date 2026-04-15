@@ -100,36 +100,8 @@ client -> server: img_size,vehicle,frame_id,t_gen\n + JPEG bytes
 server -> client: vehicle,frame_id,v,omega,t_server,aoi_server\n
 ```
 
-## Segmentation Training
-
-Training data is intentionally kept outside this repository. The expected dataset layout is:
-
-```text
-<dataset-root>/
-  trainTRACKimg/
-  trainTRACKmask/
-```
-
-Train the lightweight depthwise-SE model with focal-dice loss:
-
-```bash
-python3 segmentation/train.py \
-  --model-config segmentation/configs/model/depthwise_se.yaml \
-  --train-config segmentation/configs/train/focal_dice.yaml \
-  --dataset-root /path/to/Duckie_segment_data \
-  --output-dir weight/outputs/depthwise_se
-```
-
-Train all configured segmentation variants with the same loss/config:
-
-```bash
-DATASET_ROOT=/path/to/Duckie_segment_data \
-./segmentation/run_all.sh segmentation/configs/train/focal_dice.yaml
-```
 
 ## Notes
 
-- The default segmentation weight is `weight/segment_depthwise_se.pth`.
-- The selected segmentation architecture is configured from the checkpoint metadata.
 - `weight/yolo.pt` and `weight/segment_depthwise_se.pth` are the runtime weights used by default.
 - Generated outputs such as `output/`, `rec/`, videos, logs, and caches are ignored by Git.
