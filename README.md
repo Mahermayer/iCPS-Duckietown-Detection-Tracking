@@ -49,34 +49,48 @@ YOLO_WEIGHTS=weight/yolo.pt
 
 ## Vehicle Setup
 
-The Duckietown launcher runs:
+Build the Duckiebot image from the project root. Replace `ruks007` with your vehicle hostname:
+
+```bash
+dts devel build -H ruks007 -f
+```
+
+Run the image on the vehicle:
+
+```bash
+dts devel run -H ruks007
+```
+
+The default launcher runs:
 
 ```bash
 rosrun my_package vehicle_client.py
 ```
 
-Set the server address with ROS params:
+Set the GPU server address when launching if the default is not correct:
+
+```bash
+GPU_SERVER_IP=<server-ip> GPU_SERVER_PORT=5001 dts devel run -H ruks007
+```
+
+For direct ROS testing inside a Duckietown shell/container, use ROS params:
 
 ```bash
 rosrun my_package vehicle_client.py _gpu_ip:=<server-ip> _gpu_port:=5001
 ```
 
-Or set environment variables before launching:
+On startup, the vehicle client prints the target address before connecting:
 
-```bash
-export GPU_SERVER_IP=<server-ip>
-export GPU_SERVER_PORT=5001
-rosrun my_package vehicle_client.py
+```text
+Trying to connect to GPU server at <server-ip>:5001
+TCP connected to <server-ip>:5001
 ```
 
-For a Duckietown container, pass the variables into the container:
+The normal build/run sequence should look like:
 
 ```bash
-docker run \
-  -e VEHICLE_NAME=<duckiebot-name> \
-  -e GPU_SERVER_IP=<server-ip> \
-  -e GPU_SERVER_PORT=5001 \
-  <image-name>
+dts devel build -H ruks007 -f
+dts devel run -H ruks007
 ```
 
 The TCP protocol is line-header + JPEG payload from vehicle to server, then one command reply line from server to vehicle:
