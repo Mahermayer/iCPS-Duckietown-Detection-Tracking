@@ -93,11 +93,29 @@ packages/my_package/src/
 
 ### Communication Protocol
 
-**Client → Server:**  
-`img_size,vehicle,frame_id,t_gen\n` + JPEG image data
+---
 
-**Server → Client:**  
-`vehicle,frame_id,v,omega,t_server,aoi_server\n`
+
+
+```markdown
+## System Flow with Timing
+
+```mermaid
+flowchart LR
+
+A[Camera Capture] -->|t_gen| B[Frame + frame_id]
+B --> C[JPEG Encode]
+C --> D[TCP Send]
+
+D --> E[GPU Server Receive]
+E --> F[Perception Pipeline]
+F --> G[YOLO + U-Net + ByteTrack]
+G --> H[Control (PID/FSM)]
+H -->|t_server| I[Compute v, omega]
+
+I -->|aoi_server = t_server - t_gen| J[Send Response]
+J --> K[Duckiebot Client]
+K --> L[Apply Control]
 
 ### Running Multiple Vehicles
 
