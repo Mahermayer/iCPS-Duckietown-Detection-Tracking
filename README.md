@@ -17,6 +17,9 @@ The server then sends **motion commands** (velocity `v` and angular velocity `om
 
 ![System Pipeline](pipeline.png)
 
+## Demo
+
+[![Watch the demo](thumbnail.png)](ID_Tracking.avi)
 ## How It Works
 
 ### The Pipeline
